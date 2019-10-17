@@ -35,23 +35,28 @@ public class Controleur extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        session = request.getSession();
-        userInput = new Utilisateur();
         
-        userInput.setLogin(request.getParameter(FRM_LOGIN));
-        userInput.setMdp(request.getParameter(FRM_MDP));
+        if(request.getParameter("loginForm")==null)
+            request.getRequestDispatcher("WEB-INF/accueil.jsp").forward(request,response);
 
-        request.setAttribute("userBean", userInput);
+        else{
+            session = request.getSession();
+            userInput = new Utilisateur();
 
-        ActionsBD actionsBD = new ActionsBD();
+            userInput.setLogin(request.getParameter(FRM_LOGIN));
+            userInput.setMdp(request.getParameter(FRM_MDP));
 
-        if (actionsBD.verifInfosConnexion(userInput)) {
-            session.setAttribute("listeEmplKey", actionsBD.getEmployes());
-            request.getRequestDispatcher(JSP_BIENVENUE).forward(request, response);
-        } else {
-            request.setAttribute("errKey", ERR_CONNEXION_KO);
-            request.getRequestDispatcher(JSP_ACCUEIL).forward(request, response);
+            request.setAttribute("userBean", userInput);
+
+            ActionsBD actionsBD = new ActionsBD();
+
+            if (actionsBD.verifInfosConnexion(userInput)) {
+                session.setAttribute("listeEmplKey", actionsBD.getEmployes());
+                request.getRequestDispatcher(JSP_BIENVENUE).forward(request, response);
+            } else {
+                request.setAttribute("errKey", ERR_CONNEXION_KO);
+                request.getRequestDispatcher(JSP_ACCUEIL).forward(request, response);
+            }
         }
 
     }

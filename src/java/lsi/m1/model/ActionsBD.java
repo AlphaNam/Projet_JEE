@@ -59,7 +59,7 @@ public class ActionsBD {
             while (rs.next()) {
                 Utilisateur userBean = new Utilisateur();
                 userBean.setLogin(rs.getString("LOGIN"));
-                userBean.setMdp(rs.getString("MDP"));
+                userBean.setMdp(rs.getString("PASSWORD"));
 
                 listeUsers.add(userBean);
             }
@@ -78,8 +78,15 @@ public class ActionsBD {
             while (rs.next()) {
                 EmployeBean emplBean = new EmployeBean();
                 emplBean.setNom(rs.getString("NOM"));
-                emplBean.setPrenom(rs.getString("PRENOM"));
+                emplBean.setPrenom(rs.getString("PRENOM"));                
+                emplBean.setTelDom(rs.getString("TELDOM"));
+                emplBean.setTelPort(rs.getString("TELPORT"));
+                emplBean.setTelPro(rs.getString("TELPRO"));
+                emplBean.setAdresse(rs.getString("ADRESSE"));
+                emplBean.setCodePostal(rs.getString("CODEPOSTAL"));
                 emplBean.setVille(rs.getString("VILLE"));
+                emplBean.setEmail(rs.getString("EMAIL"));
+                
 
                 listeEmployes.add(emplBean);
             }
