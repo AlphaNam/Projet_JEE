@@ -54,7 +54,7 @@ public class ActionsBD {
     public ArrayList getUtilisateurs() {
         listeUsers = new ArrayList<>();
         try {
-            rs = getResultSet(REQ_TOUS);
+            rs = getResultSet(REQ_TOUS_UTILISATEURS);
 
             while (rs.next()) {
                 Utilisateur userBean = new Utilisateur();
@@ -85,9 +85,7 @@ public class ActionsBD {
                 emplBean.setAdresse(rs.getString("ADRESSE"));
                 emplBean.setCodePostal(rs.getString("CODEPOSTAL"));
                 emplBean.setVille(rs.getString("VILLE"));
-                emplBean.setEmail(rs.getString("EMAIL"));
-                
-
+                emplBean.setEmail(rs.getString("EMAIL"));     
                 listeEmployes.add(emplBean);
             }
         } catch (SQLException e) {

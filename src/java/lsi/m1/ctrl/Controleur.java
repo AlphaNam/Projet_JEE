@@ -23,6 +23,7 @@ import static lsi.m1.utils.Constantes.*;
 public class Controleur extends HttpServlet {
     Utilisateur userInput;
     HttpSession session;
+    boolean connected ;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,7 +38,7 @@ public class Controleur extends HttpServlet {
             throws ServletException, IOException {
         
         if(request.getParameter("loginForm")==null)
-            request.getRequestDispatcher("WEB-INF/accueil.jsp").forward(request,response);
+            request.getRequestDispatcher(JSP_LOGIN).forward(request,response);
 
         else{
             session = request.getSession();
@@ -51,13 +52,18 @@ public class Controleur extends HttpServlet {
             ActionsBD actionsBD = new ActionsBD();
 
             if (actionsBD.verifInfosConnexion(userInput)) {
+                connected = true;
                 session.setAttribute("listeEmplKey", actionsBD.getEmployes());
-                request.getRequestDispatcher(JSP_BIENVENUE).forward(request, response);
-            } else {
+                request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);
+            } 
+            else {
                 request.setAttribute("errKey", ERR_CONNEXION_KO);
-                request.getRequestDispatcher(JSP_ACCUEIL).forward(request, response);
+                request.getRequestDispatcher(JSP_LOGIN).forward(request, response);
             }
+            
         }
+        
+        
 
     }
 
@@ -73,7 +79,24 @@ public class Controleur extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+//        if(userInput == null){            
+//            processRequest(request, response);
+//        }
+//        if(request.getParameter("details").equals("details")){
+//                request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
+//            }
+        if(!connected){            
+            processRequest(request, response);
+        }
+        else if (request.getParameter("details").equals("details") ){
+            request.setAttribute("user", userInput);
+            request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
+            }
+        else if (request.getParameter("add").equals("add") ){
+            request.setAttribute("user", userInput);
+            request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
+        }
+        
     }
 
     /**
@@ -87,7 +110,16 @@ public class Controleur extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        if(!connected){            
+            processRequest(request, response);
+        }
+        else if (request.getParameter("details").equals("details") || request.getParameter("add").equals("add")){
+                request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
+            }
+        else if (request.getParameter("add").equals("add") ){
+            request.setAttribute("user", userInput);
+            request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
+        }
     }
 
     /**

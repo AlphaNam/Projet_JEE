@@ -22,6 +22,7 @@
 
 
 <div class="container">
+    <form action="Controleur" name = "lisEmployeForm" >
         <div class="table-wrapper">
             <div class="table-title">
                 <div class="row">
@@ -46,7 +47,7 @@
                 <tbody>
                     <c:forEach items="${listeEmplKey}" var="employe">
                     <tr>
-                        <td><input type="checkbox" class="form-check-input" id="sel"></td>
+                        <td><input type="radio" class="form-check-input" id="sel"></td>
                         <td>${employe.nom}</td>
                         <td>${employe.prenom}</td>
                         <td>${employe.telDom}</td>
@@ -60,8 +61,11 @@
                     </c:forEach>
                 </tbody>
             </table>            
-            <div class="col-sm-4">
-                <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Ajouter</button>
+            <div class="col-sm-4">                
+                <button type="button" class="btn btn-primary"> Supprimer </button>                
+                <button type="submit" value="details" name="details" class="btn btn-primary"> Détails </button>
+                <button type="button" value ="add" name = "add" class="btn btn-light"> Ajouter </button>
             </div>
         </div>
+    </form>
     </div>    

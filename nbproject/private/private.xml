@@ -3,8 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/agilan.colbert/Documents/EFREI/M1/J2EE/TP/lsim1-tp3et4-03102019/src/java/lsi/m1/ctrl/Controleur.java</file>
-            <file>file:/C:/Users/agilan.colbert/Documents/EFREI/M1/J2EE/TP/lsim1-tp3et4-03102019/web/accueil.jsp</file>
+            <file>file:/C:/Dev/Projet_JEE/src/java/lsi/m1/utils/Constantes.java</file>
+            <file>file:/C:/Dev/Projet_JEE/src/java/lsi/m1/model/ActionsBD.java</file>
+            <file>file:/C:/Dev/Projet_JEE/web/WEB-INF/accueil.jsp</file>
+            <file>file:/C:/Dev/Projet_JEE/web/WEB-INF/bienvenue.jsp</file>
+            <file>file:/C:/Dev/Projet_JEE/src/java/lsi/m1/ctrl/Controleur.java</file>
         </group>
     </open-files>
 </project-private>
