@@ -23,7 +23,6 @@ import static lsi.m1.utils.Constantes.*;
 public class Controleur extends HttpServlet {
     Utilisateur userInput;
     HttpSession session;
-    boolean connected ;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,11 +36,21 @@ public class Controleur extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        if(request.getParameter("loginForm")==null)
+        if (request.getSession().getAttribute("loggedInUser")!= null){
+            System.out.println("valeur de session id apres login :" + session.getId());
+            switch(request.getParameter("action")){
+                case "details" :
+                    request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
+                case "add" :
+                request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
+            }
+        }
+        if(request.getParameter("loginForm")==null){            
             request.getRequestDispatcher(JSP_LOGIN).forward(request,response);
-
+        }
         else{
             session = request.getSession();
+            System.out.println("valeur de session id avt login form :" + session.getId());
             userInput = new Utilisateur();
 
             userInput.setLogin(request.getParameter(FRM_LOGIN));
@@ -52,7 +61,7 @@ public class Controleur extends HttpServlet {
             ActionsBD actionsBD = new ActionsBD();
 
             if (actionsBD.verifInfosConnexion(userInput)) {
-                connected = true;
+                request.getSession().setAttribute("loggedInUser", userInput);
                 session.setAttribute("listeEmplKey", actionsBD.getEmployes());
                 request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);
             } 
@@ -60,6 +69,7 @@ public class Controleur extends HttpServlet {
                 request.setAttribute("errKey", ERR_CONNEXION_KO);
                 request.getRequestDispatcher(JSP_LOGIN).forward(request, response);
             }
+            
             
         }
         
@@ -79,23 +89,7 @@ public class Controleur extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        if(userInput == null){            
-//            processRequest(request, response);
-//        }
-//        if(request.getParameter("details").equals("details")){
-//                request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
-//            }
-        if(!connected){            
-            processRequest(request, response);
-        }
-        else if (request.getParameter("details").equals("details") ){
-            request.setAttribute("user", userInput);
-            request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
-            }
-        else if (request.getParameter("add").equals("add") ){
-            request.setAttribute("user", userInput);
-            request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
-        }
+                processRequest(request, response);
         
     }
 
@@ -109,17 +103,8 @@ public class Controleur extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        if(!connected){            
-            processRequest(request, response);
-        }
-        else if (request.getParameter("details").equals("details") || request.getParameter("add").equals("add")){
-                request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
-            }
-        else if (request.getParameter("add").equals("add") ){
-            request.setAttribute("user", userInput);
-            request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
-        }
+            throws ServletException, IOException {     
+                processRequest(request, response);
     }
 
     /**
