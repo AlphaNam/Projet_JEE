@@ -35,11 +35,12 @@ public class Controleur extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+        ActionsBD actionsBD = new ActionsBD();
         if (request.getSession().getAttribute("loggedInUser")!= null){
             System.out.println("valeur de session id apres login :" + session.getId());
             switch(request.getParameter("action")){
                 case "details" :
+                    session.setAttribute("singleUser", actionsBD.getSingleEmploye(new Integer(request.getParameter("sel"))-1));
                     request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
                 case "add" :
                 request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
@@ -58,7 +59,7 @@ public class Controleur extends HttpServlet {
 
             request.setAttribute("userBean", userInput);
 
-            ActionsBD actionsBD = new ActionsBD();
+            //ActionsBD actionsBD = new ActionsBD();
 
             if (actionsBD.verifInfosConnexion(userInput)) {
                 request.getSession().setAttribute("loggedInUser", userInput);

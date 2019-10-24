@@ -47,7 +47,7 @@
                 <tbody>
                     <c:forEach items="${listeEmplKey}" var="employe">
                     <tr>
-                        <td><input type="radio" class="form-check-input" id="sel" name="sel" value="${employe.nom}"></td>
+                        <td><input type="radio" class="form-check-input" id="sel" name="sel" value="${employe.id}"></td>
                         <td>${employe.nom}</td>
                         <td>${employe.prenom}</td>
                         <td>${employe.telDom}</td>

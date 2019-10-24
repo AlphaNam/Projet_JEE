@@ -77,6 +77,7 @@ public class ActionsBD {
 
             while (rs.next()) {
                 EmployeBean emplBean = new EmployeBean();
+                emplBean.setId(rs.getInt("ID"));
                 emplBean.setNom(rs.getString("NOM"));
                 emplBean.setPrenom(rs.getString("PRENOM"));                
                 emplBean.setTelDom(rs.getString("TELDOM"));
@@ -92,6 +93,12 @@ public class ActionsBD {
             System.out.println(e.getMessage());
         }
         return listeEmployes;
+    }
+    
+    public EmployeBean getSingleEmploye(int id) {
+        //admin admin
+        listeEmployes = getEmployes();
+        return listeEmployes.get(id);
     }
 
     public boolean verifInfosConnexion(Utilisateur userInput) {

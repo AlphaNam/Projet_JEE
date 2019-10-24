@@ -10,6 +10,7 @@ package lsi.m1.model;
  * @author nitsu
  */
 public class EmployeBean {
+    private int id;
     private String nom;
     private String prenom;
     private String telDom;
@@ -19,6 +20,14 @@ public class EmployeBean {
     private String codePostal;
     private String ville;
     private String email;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNom() {
         return nom;

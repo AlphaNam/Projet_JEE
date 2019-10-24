@@ -43,63 +43,63 @@
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <div class="card">
-                                <div class="card-header">Détails du membre * NOM A AFFICHER DYNAMIQUEMENT *</div>
+                                <div class="card-header">Détails du membre ${singleUser.nom}</div>
                                 <div class="card-body">
 
                                     <div class="form-group row">
                                         <label for="nom" class="col-md-2 col-form-label text-md-right"><b>Nom</b></label>
                                         <div class="col-md-8">
-                                            <input type="text" id="nom" class="form-control" name="nom">
+                                            <input type="text" id="nom" class="form-control" name="nom" placeholder="${singleUser.nom}">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label for="prenom" class="col-md-2 col-form-label text-md-right"><b>Prénom</b></label>
                                         <div class="col-md-8">
-                                            <input type="text" id="prenom" class="form-control" name="prenom">
+                                            <input type="text" id="prenom" class="form-control" name="prenom" placeholder="${singleUser.prenom}">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label for="tel_dom" class="col-md-2 col-form-label text-md-right"><b>Tél dom</b></label>
                                         <div class="col-md-8">
-                                            <input type="text" id="tel_dom" class="form-control" name="tel_dom">
+                                            <input type="text" id="tel_dom" class="form-control" name="tel_dom" placeholder="${singleUser.telDom}">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label for="tel_mob" class="col-md-2 col-form-label text-md-right"><b>Tél mob</b></label>
                                         <div class="col-md-8">
-                                            <input type="text" id="tel_mob" class="form-control" name="tel_mob">
+                                            <input type="text" id="tel_mob" class="form-control" name="tel_mob" placeholder="${singleUser.telPort}">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label for="tel_pro" class="col-md-2 col-form-label text-md-right"><b>Tél pro</b></label>
                                         <div class="col-md-8">
-                                            <input type="text" id="tel_pro" class="form-control" name="tel_pro">
+                                            <input type="text" id="tel_pro" class="form-control" name="tel_pro" placeholder="${singleUser.telPro}">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label for="adresse" class="col-md-2 col-form-label text-md-right"><b>Adresse</b></label>
                                         <div class="col-md-3">
-                                            <input type="text" id="adresse" class="form-control" name="adresse">
+                                            <input type="text" id="adresse" class="form-control" name="adresse" placeholder="${singleUser.adresse}">
                                         </div>
                                         <label for="codePostal" class="col-md-2 col-form-label text-md-right"><b>Code Postal</b></label>
                                         <div class="col-md-3">
-                                            <input type="text" id="codePostal" class="form-control" name="codePostal">
+                                            <input type="text" id="codePostal" class="form-control" name="codePostal" placeholder="${singleUser.codePostal}">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label for="ville" class="col-md-2 col-form-label text-md-right"><b>Ville</b></label>
                                         <div class="col-md-3">
-                                            <input type="text" id="ville" class="form-control" name="ville">
+                                            <input type="text" id="ville" class="form-control" name="ville" placeholder="${singleUser.ville}">
                                         </div>
                                         <label for="email" class="col-md-2 col-form-label text-md-right"><b>Adresse e-mail</b></label>
                                         <div class="col-md-3">
-                                            <input type="text" id="email" class="form-control" name="email">
+                                            <input type="text" id="email" class="form-control" name="email"placeholder="${singleUser.email}">
                                         </div>
                                     </div>
 
