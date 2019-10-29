@@ -21,6 +21,7 @@ import static lsi.m1.utils.Constantes.*;
  * @author nitsu
  */
 public class Controleur extends HttpServlet {
+
     Utilisateur userInput;
     HttpSession session;
 
@@ -36,20 +37,25 @@ public class Controleur extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ActionsBD actionsBD = new ActionsBD();
-        if (request.getSession().getAttribute("loggedInUser")!= null){
-            System.out.println("valeur de session id apres login :" + session.getId());
-            switch(request.getParameter("action")){
-                case "details" :
-                    session.setAttribute("singleUser", actionsBD.getSingleEmploye(new Integer(request.getParameter("sel"))-1));
+        if (request.getSession().getAttribute("loggedInUser") != null) {
+//            System.out.println("valeur de session id apres login :" + session.getId());
+            switch (request.getParameter("action")) {
+                case "details":
+                    if(request.getParameter("sel") != null){
+                    session.setAttribute("singleUser", actionsBD.getSingleEmploye(new Integer(request.getParameter("sel")) - 1));
                     request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
-                case "add" :
-                request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
+                    }
+                    else
+                        request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);
+                    break;
+                case "add":
+                    request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
+                    break;
             }
         }
-        if(request.getParameter("loginForm")==null){            
-            request.getRequestDispatcher(JSP_LOGIN).forward(request,response);
-        }
-        else{
+        if (request.getParameter("loginForm") == null) {
+            request.getRequestDispatcher(JSP_LOGIN).forward(request, response);
+        } else {
             session = request.getSession();
             System.out.println("valeur de session id avt login form :" + session.getId());
             userInput = new Utilisateur();
@@ -60,21 +66,16 @@ public class Controleur extends HttpServlet {
             request.setAttribute("userBean", userInput);
 
             //ActionsBD actionsBD = new ActionsBD();
-
             if (actionsBD.verifInfosConnexion(userInput)) {
                 request.getSession().setAttribute("loggedInUser", userInput);
                 session.setAttribute("listeEmplKey", actionsBD.getEmployes());
                 request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);
-            } 
-            else {
+            } else {
                 request.setAttribute("errKey", ERR_CONNEXION_KO);
                 request.getRequestDispatcher(JSP_LOGIN).forward(request, response);
             }
-            
-            
+
         }
-        
-        
 
     }
 
@@ -90,8 +91,8 @@ public class Controleur extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                processRequest(request, response);
-        
+        processRequest(request, response);
+
     }
 
     /**
@@ -104,8 +105,8 @@ public class Controleur extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {     
-                processRequest(request, response);
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
