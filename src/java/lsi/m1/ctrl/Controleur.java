@@ -22,6 +22,7 @@ import static lsi.m1.utils.Constantes.*;
  * @author nitsu
  */
 public class Controleur extends HttpServlet {
+
     Utilisateur userInput;
     HttpSession session;
 
@@ -100,16 +101,12 @@ public class Controleur extends HttpServlet {
                 request.getSession().setAttribute("loggedInUser", userInput);
                 request.setAttribute("listeEmplKey", actionsBD.getEmployes());
                 request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);
-            } 
-            else {
+            } else {
                 request.setAttribute("errKey", ERR_CONNEXION_KO);
                 request.getRequestDispatcher(JSP_LOGIN).forward(request, response);
             }
-            
-            
+
         }
-        
-        
 
     }
 
@@ -125,8 +122,8 @@ public class Controleur extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                processRequest(request, response);
-        
+        processRequest(request, response);
+
     }
 
     /**
@@ -139,8 +136,8 @@ public class Controleur extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {     
-                processRequest(request, response);
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
