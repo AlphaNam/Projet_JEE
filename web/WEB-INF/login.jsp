@@ -44,7 +44,11 @@
                 <div class="card">
                     <div class="card-header">Login</div>
                     <div class="card-body">
-                        <form action="Controleur" name = "myForm" >
+                    
+                    <c:if test = "${!empty errKey }">
+                        <span style="color:red"> ${errKey} </span><br/>
+                    </c:if> 
+                       <form action="Controleur" name = "myForm" >
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <input type="text" id="loginForm" class="form-control" name="loginForm" placeholder="Login" required autofocus>

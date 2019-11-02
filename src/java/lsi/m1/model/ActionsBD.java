@@ -2,10 +2,13 @@ package lsi.m1.model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static lsi.m1.utils.Constantes.*;
 
 /**
@@ -16,6 +19,7 @@ public class ActionsBD {
 
     Connection conn;
     Statement stmt;
+    PreparedStatement preparedStmt;
     ResultSet rs;
     Utilisateur user;
     ArrayList<Utilisateur> listeUsers;
@@ -38,6 +42,15 @@ public class ActionsBD {
             System.out.println(e.getMessage());
         }
         return stmt;
+    }
+    
+        public PreparedStatement getPreparedStatement(String req) {
+        try {
+            preparedStmt = conn.prepareStatement(req);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return preparedStmt;
     }
 
     public ResultSet getResultSet(String req) {
@@ -96,9 +109,63 @@ public class ActionsBD {
     }
     
     public EmployeBean getSingleEmploye(int id) {
-        //admin admin
         listeEmployes = getEmployes();
-        return listeEmployes.get(id);
+        for(EmployeBean emp : listeEmployes){
+            if (emp.getId() == id){
+                return emp;
+            }
+        }
+        return null;        
+    }
+    
+    public void deleteEmploye(int id) {
+        try {
+            preparedStmt = getPreparedStatement(REQ_DELETE_EMPLOYE);
+            preparedStmt.setInt(1, id);          
+            preparedStmt.executeUpdate();
+            listeEmployes = getEmployes();
+        } catch (SQLException ex) {
+            Logger.getLogger(ActionsBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+        public void addEmploye(String nom,String prenom,String teldom,String telport,String telpro,String adresse,String codepostal,String ville,String email) {
+        try {
+            preparedStmt = getPreparedStatement(REQ_ADD_EMPLOYE);
+            preparedStmt.setString(1, nom);
+            preparedStmt.setString(2, prenom);
+            preparedStmt.setString(3, teldom);
+            preparedStmt.setString(4, telport);
+            preparedStmt.setString(5, telpro);
+            preparedStmt.setString(6, adresse);
+            preparedStmt.setString(7, codepostal);
+            preparedStmt.setString(8, ville);
+            preparedStmt.setString(9, email);            
+            preparedStmt.executeUpdate();
+            listeEmployes = getEmployes();
+        } catch (SQLException ex) {
+            Logger.getLogger(ActionsBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+        
+    public void modifyEmploye(int id, String nom,String prenom,String teldom,String telport,String telpro,String adresse,String codepostal,String ville,String email) {
+        try {
+            preparedStmt = getPreparedStatement(REQ_MODIFY_EMPLOYE);
+            preparedStmt.setString(1, nom);
+            preparedStmt.setString(2, prenom);
+            preparedStmt.setString(3, teldom);
+            preparedStmt.setString(4, telport);
+            preparedStmt.setString(5, telpro);
+            preparedStmt.setString(6, adresse);
+            preparedStmt.setString(7, codepostal);
+            preparedStmt.setString(8, ville);
+            preparedStmt.setString(9, email);
+            preparedStmt.setInt(10, id);            
+            preparedStmt.executeUpdate();
+            listeEmployes = getEmployes();
+        } catch (SQLException ex) {
+            Logger.getLogger(ActionsBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public boolean verifInfosConnexion(Utilisateur userInput) {

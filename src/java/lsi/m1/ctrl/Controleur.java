@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -36,22 +37,58 @@ public class Controleur extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ActionsBD actionsBD = new ActionsBD();
-        if (request.getSession().getAttribute("loggedInUser")!= null){
-            System.out.println("valeur de session id apres login :" + session.getId());
+        session = request.getSession();
+        
+        if (session.getAttribute("loggedInUser")!= null){
             switch(request.getParameter("action")){
+                case "delete"  :
+                    if(request.getParameter("sel")!=null){
+                        actionsBD.deleteEmploye(new Integer(request.getParameter("sel")));
+                        request.setAttribute("listeEmplKey", actionsBD.getEmployes());
+                        request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);
+                    }                    
                 case "details" :
-                    session.setAttribute("singleUser", actionsBD.getSingleEmploye(new Integer(request.getParameter("sel"))-1));
-                    request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
+                    if(request.getParameter("sel")!=null){                        
+                        request.setAttribute("listeEmplKey", actionsBD.getEmployes());
+                        session.setAttribute("selectionnedIdEmplForDetails",new Integer(request.getParameter("sel")));
+                        request.setAttribute("singleUser", actionsBD.getSingleEmploye(new Integer(request.getParameter("sel"))));
+                        request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
+                    }
+                    else{
+                        request.setAttribute("listeEmplKey", actionsBD.getEmployes());
+                        request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);
+                    }
+                    break;
                 case "add" :
-                request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
+                    request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);                  
+                    break;         
+                case "valider":
+                    actionsBD.addEmploye(request.getParameter("nom"),request.getParameter("prenom"),
+                              request.getParameter("tel_dom"),request.getParameter("tel_mob"),
+                              request.getParameter("tel_pro"),request.getParameter("adresse") ,
+                              request.getParameter("codePostal") ,request.getParameter("ville") ,
+                              request.getParameter("email"));
+                    request.setAttribute("listeEmplKey", actionsBD.getEmployes());
+                    request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response); 
+                case "modify" :
+                    actionsBD.modifyEmploye((int) session.getAttribute("selectionnedIdEmplForDetails"),request.getParameter("nom"),request.getParameter("prenom"),
+                              request.getParameter("tel_dom"),request.getParameter("tel_mob"),
+                              request.getParameter("tel_pro"),request.getParameter("adresse") ,
+                              request.getParameter("codePostal") ,request.getParameter("ville") ,
+                              request.getParameter("email"));
+                    request.setAttribute("singleUser", actionsBD.getSingleEmploye((int) session.getAttribute("selectionnedIdEmplForDetails")));
+                    request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
+                    break;
+                case "seeList" :
+                    request.setAttribute("listeEmplKey", actionsBD.getEmployes());
+                    request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);
             }
         }
-        if(request.getParameter("loginForm")==null){            
+        else if(request.getParameter("loginForm")==null){            
             request.getRequestDispatcher(JSP_LOGIN).forward(request,response);
         }
         else{
-            session = request.getSession();
-            System.out.println("valeur de session id avt login form :" + session.getId());
+            //session = request.getSession();
             userInput = new Utilisateur();
 
             userInput.setLogin(request.getParameter(FRM_LOGIN));
@@ -59,11 +96,9 @@ public class Controleur extends HttpServlet {
 
             request.setAttribute("userBean", userInput);
 
-            //ActionsBD actionsBD = new ActionsBD();
-
             if (actionsBD.verifInfosConnexion(userInput)) {
                 request.getSession().setAttribute("loggedInUser", userInput);
-                session.setAttribute("listeEmplKey", actionsBD.getEmployes());
+                request.setAttribute("listeEmplKey", actionsBD.getEmployes());
                 request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);
             } 
             else {

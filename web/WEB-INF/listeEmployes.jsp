@@ -47,7 +47,7 @@
                 <tbody>
                     <c:forEach items="${listeEmplKey}" var="employe">
                     <tr>
-                        <td><input type="radio" class="form-check-input" id="sel" name="sel" value="${employe.id}"></td>
+                        <td><input type="radio"  class="form-check-input" id="sel" name="sel" value="${employe.id}"></td>
                         <td>${employe.nom}</td>
                         <td>${employe.prenom}</td>
                         <td>${employe.telDom}</td>
@@ -62,7 +62,7 @@
                 </tbody>
             </table>            
             <div class="col-sm-4">                
-                <button type="button" name="action" value="delete" class="btn btn-primary"> Supprimer </button>                
+                <button type="submit" name="action" value="delete" class="btn btn-primary"> Supprimer </button>                
                 <button type="submit" name="action" value="details" class="btn btn-primary"> Détails </button>
                 <button type="submit" name="action" value ="add" class="btn btn-light"> Ajouter </button>
             </div>
