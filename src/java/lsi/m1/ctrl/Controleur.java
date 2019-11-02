@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import lsi.m1.model.ActionsBD;
 import lsi.m1.model.Utilisateur;
 import static lsi.m1.utils.Constantes.*;
+import org.apache.derby.impl.sql.compile.SQLParserConstants;
 
 /**
  *
@@ -40,38 +41,66 @@ public class Controleur extends HttpServlet {
         ActionsBD actionsBD = new ActionsBD();
         session = request.getSession();
         
-        if (session.getAttribute("loggedInUser")!= null){
+        if (session.getAttribute("loggedInUser")!= null){            
+            if (actionsBD.getEmployes().isEmpty())
+                request.setAttribute("emptyErrKey", MSG_VIDE_EMPLOYE);
             switch(request.getParameter("action")){
+                case "deconnect" :
+                    while(session.getAttributeNames().hasMoreElements()){
+                        session.removeAttribute(session.getAttributeNames().nextElement());
+                    }
+                    request.getRequestDispatcher(JSP_LOGIN).forward(request,response);  
+                    break;
                 case "delete"  :
-                    if(request.getParameter("sel")!=null){
+                    if (actionsBD.getEmployes().isEmpty())
+                        request.setAttribute("emptyErrKey", MSG_VIDE_EMPLOYE);
+                    else if(request.getParameter("sel")!=null){
                         actionsBD.deleteEmploye(new Integer(request.getParameter("sel")));
-                        request.setAttribute("listeEmplKey", actionsBD.getEmployes());
-                        request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);
-                    }                    
+                        request.setAttribute("OkKey", MSG_SUPPRESSION_OK);
+                    }
+                    else
+                        request.setAttribute("errKey", ERR_SELECTION_KO);
+                    request.setAttribute("listeEmplKey", actionsBD.getEmployes());
+                    request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);   
+                    break;
                 case "details" :
                     if(request.getParameter("sel")!=null){                        
                         request.setAttribute("listeEmplKey", actionsBD.getEmployes());
                         session.setAttribute("selectionnedIdEmplForDetails",new Integer(request.getParameter("sel")));
                         request.setAttribute("singleUser", actionsBD.getSingleEmploye(new Integer(request.getParameter("sel"))));
                         request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
+                        break;
                     }
                     else{
+                        request.setAttribute("errKey", ERR_SELECTION_KO);
                         request.setAttribute("listeEmplKey", actionsBD.getEmployes());
                         request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);
-                    }
+                    }                    
                     break;
                 case "add" :
                     request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);                  
                     break;         
                 case "valider":
+                    if (request.getParameter("nom").isEmpty() || request.getParameter("prenom").isEmpty()){
+                        request.setAttribute("errKey", ERR_ADD_KO);
+                        request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
+                        break;
+                    }                        
                     actionsBD.addEmploye(request.getParameter("nom"),request.getParameter("prenom"),
                               request.getParameter("tel_dom"),request.getParameter("tel_mob"),
                               request.getParameter("tel_pro"),request.getParameter("adresse") ,
                               request.getParameter("codePostal") ,request.getParameter("ville") ,
                               request.getParameter("email"));
+                    request.removeAttribute("emptyErrKey");
                     request.setAttribute("listeEmplKey", actionsBD.getEmployes());
-                    request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response); 
-                case "modify" :
+                    request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);
+                    break;
+                case "modify" :                    
+                    if (request.getParameter("nom").isEmpty() || request.getParameter("prenom").isEmpty()){
+                        request.setAttribute("errKey", ERR_ADD_KO);
+                        request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
+                        break;
+                    }    
                     actionsBD.modifyEmploye((int) session.getAttribute("selectionnedIdEmplForDetails"),request.getParameter("nom"),request.getParameter("prenom"),
                               request.getParameter("tel_dom"),request.getParameter("tel_mob"),
                               request.getParameter("tel_pro"),request.getParameter("adresse") ,
@@ -83,6 +112,7 @@ public class Controleur extends HttpServlet {
                 case "seeList" :
                     request.setAttribute("listeEmplKey", actionsBD.getEmployes());
                     request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);
+                    break;
             }
         }
         else if(request.getParameter("loginForm")==null){            
@@ -97,12 +127,22 @@ public class Controleur extends HttpServlet {
 
             request.setAttribute("userBean", userInput);
 
-            if (actionsBD.verifInfosConnexion(userInput)) {
+            if (userInput.getLogin().isEmpty() || userInput.getMdp().isEmpty()){
+                request.setAttribute("errKey", ERR_INCOMPLETE_KO);
+                request.getRequestDispatcher(JSP_LOGIN).forward(request, response);
+            }
+                    
+            else if (actionsBD.verifInfosConnexion(userInput)) {
+               if(userInput.getLogin().equals("admin"))
+                   session.setAttribute("isAdmin", true);
+                session.setAttribute("isEmploye", true);
                 request.getSession().setAttribute("loggedInUser", userInput);
-                request.setAttribute("listeEmplKey", actionsBD.getEmployes());
+                request.setAttribute("listeEmplKey", actionsBD.getEmployes());                
+                if (actionsBD.getEmployes().isEmpty())
+                    request.setAttribute("emptyErrKey", MSG_VIDE_EMPLOYE);
                 request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);
             } else {
-                request.setAttribute("errKey", ERR_CONNEXION_KO);
+                request.setAttribute("errKey", ERR_INCORRECT_KO);
                 request.getRequestDispatcher(JSP_LOGIN).forward(request, response);
             }
 

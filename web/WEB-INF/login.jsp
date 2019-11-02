@@ -40,7 +40,7 @@
 <main class="login-form">
     <div class="cotainer">
         <div class="row justify-content-center">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">Login</div>
                     <div class="card-body">
@@ -51,13 +51,13 @@
                        <form action="Controleur" name = "myForm" >
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <input type="text" id="loginForm" class="form-control" name="loginForm" placeholder="Login" required autofocus>
+                                    <input type="text" id="loginForm" class="form-control" name="loginForm" placeholder="Login" autofocus>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col-md-12">
-                                    <input type="password" id="mdpForm" class="form-control" name="mdpForm" placeholder="Mot de passe" required>
+                                    <input type="password" id="mdpForm" class="form-control" name="mdpForm" placeholder="Mot de passe">
                                 </div>
                             </div>
 

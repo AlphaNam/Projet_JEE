@@ -38,6 +38,7 @@
         <main class="my-form">
             <div class="cotainer">
                 <form action="Controleur" name = "detailsFom" method="POST">
+                    <button type = "submit" name="action" value="deconnect" class="btn btn-primary float-right"> Deconnect </button>
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <div class="card">
@@ -110,14 +111,17 @@
 
                                     <div class="col-md-6 offset-md-7">
                                         <c:choose>
-                                        <c:when test = "${!empty singleUser }">
+                                        <c:when test = "${!empty singleUser  && !empty isAdmin }">
                                                 <button type="submit" name="action" value = "modify" class="btn btn-primary">Modifier</button>
                                             </c:when>
-                                            <c:otherwise>
+                                            <c:when test = "${!empty isAdmin}">
                                                 <button type="submit" name="action" value = "valider" class="btn btn-primary">Valider</button>
-                                            </c:otherwise>
+                                            </c:when>
                                         </c:choose>
                                         <button type="submit" name="action" value = "seeList" class="btn btn-light">Voir liste</button>
+                                        <c:if test = "${!empty errKey }">
+                                            <p><span style="color:red" >${errKey}</span></p>
+                                        </c:if>
                                     </div>
 
                                 </div>

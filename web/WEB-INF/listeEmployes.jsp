@@ -23,12 +23,19 @@
 
 <div class="container">
     <form action="Controleur" name = "listEmployeForm" method="POST">
+        <button type = "submit" name="action" value="deconnect" class="btn btn-primary float-right"> Deconnect </button>
+        
         <div class="table-wrapper">
+            <c:if test = "${empty emptyErrKey }">
             <div class="table-title">
                 <div class="row">
-                    <div class="col-sm-8"><h2>Liste des employés</h2></div>
+                    
+                    <div class="col-sm-8">
+                        <h2>Liste des employés</h2>
+                        
+                    </div>                    
                 </div>
-            </div>
+            </div>            
             <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -45,6 +52,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <% request.getParameter("listeEmplKey");%>
                     <c:forEach items="${listeEmplKey}" var="employe">
                     <tr>
                         <td><input type="radio"  class="form-check-input" id="sel" name="sel" value="${employe.id}"></td>
@@ -60,11 +68,28 @@
                     </tr> 
                     </c:forEach>
                 </tbody>
-            </table>            
-            <div class="col-sm-4">                
-                <button type="submit" name="action" value="delete" class="btn btn-primary"> Supprimer </button>                
+            </table>
+            </c:if>
+            <div class="col-sm-4" >  
+                <c:if test = "${!empty isAdmin }">
+                    <button type="submit" name="action" value="delete" class="btn btn-primary"> Supprimer </button> 
+                </c:if>               
                 <button type="submit" name="action" value="details" class="btn btn-primary"> Détails </button>
-                <button type="submit" name="action" value ="add" class="btn btn-light"> Ajouter </button>
+                 <c:if test = "${!empty isAdmin }">
+                    <button type="submit" name="action" value ="add" class="btn btn-light"> Ajouter </button>
+                </c:if>
+                
+                <c:if test = "${!empty errKey }">
+                    <p><span style="color:red" >${errKey}</span></p>
+                </c:if>
+                    
+                <c:if test = "${!empty OkKey }">
+                    <p><span style="color:green"> ${OkKey}</span></p>
+                </c:if>
+                    
+                <c:if test = "${!empty emptyErrKey }">
+                    <p><span style="color:blue" >${emptyErrKey}</span></p>
+                </c:if>
             </div>
         </div>
     </form>
