@@ -26,7 +26,7 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -38,7 +38,9 @@
         <main class="my-form">
             <div class="cotainer">
                 <form action="Controleur" name = "detailsFom" method="POST">
-                    <button type = "submit" name="action" value="deconnect" class="btn btn-primary float-right"> Deconnect </button>
+                    <div>
+                        <button type = "submit" name="action" value="deconnect" class="btn btn-primary float-right"> <i class="material-icons">power_settings_new</i> </button>
+                    </div>
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <div class="card">

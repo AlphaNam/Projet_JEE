@@ -11,7 +11,7 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -23,8 +23,9 @@
 
 <div class="container">
     <form action="Controleur" name = "listEmployeForm" method="POST">
-        <button type = "submit" name="action" value="deconnect" class="btn btn-primary float-right"> Deconnect </button>
-        
+        <div>
+            <button type = "submit" name="action" value="deconnect" class="btn btn-primary float-right"> <i class="material-icons">power_settings_new</i> </button>
+        </div>
         <div class="table-wrapper">
             <c:if test = "${empty emptyErrKey }">
             <div class="table-title">

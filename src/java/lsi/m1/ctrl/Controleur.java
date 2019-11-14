@@ -119,7 +119,6 @@ public class Controleur extends HttpServlet {
             request.getRequestDispatcher(JSP_LOGIN).forward(request,response);
         }
         else{
-            //session = request.getSession();
             userInput = new Utilisateur();
 
             userInput.setLogin(request.getParameter(FRM_LOGIN));
