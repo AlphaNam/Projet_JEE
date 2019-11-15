@@ -15,7 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import lsi.m1.model.ActionsBD;
+import lsi.m1.model.EmployeSB;
+//import lsi.m1.model.ActionsBD;
 import lsi.m1.model.Utilisateur;
 import lsi.m1.model.UtilisateurSB;
 import static lsi.m1.utils.Constantes.*;
@@ -28,6 +29,8 @@ public class Controleur extends HttpServlet {
     
     @EJB
     private UtilisateurSB utilisateurSB;
+    @EJB
+    private EmployeSB employeSB;
     ArrayList<Utilisateur> utilisateurs;
     Utilisateur userInput;
     HttpSession session;
@@ -43,14 +46,13 @@ public class Controleur extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ActionsBD actionsBD = new ActionsBD();
         session = request.getSession();
         
         utilisateurs = new ArrayList<>();
         utilisateurs.addAll(utilisateurSB.getUtilisateurs());
         
         if (session.getAttribute("loggedInUser")!= null){            
-            if (actionsBD.getEmployes().isEmpty())
+            if (employeSB.getEmployes().isEmpty())
                 request.setAttribute("emptyErrKey", MSG_VIDE_EMPLOYE);
             switch(request.getParameter("action")){
                 case "deconnect" :
@@ -60,28 +62,28 @@ public class Controleur extends HttpServlet {
                     request.getRequestDispatcher(JSP_LOGIN).forward(request,response);  
                     break;
                 case "delete"  :
-                    if (actionsBD.getEmployes().isEmpty())
+                    if (employeSB.getEmployes().isEmpty())
                         request.setAttribute("emptyErrKey", MSG_VIDE_EMPLOYE);
                     else if(request.getParameter("sel")!=null){
-                        actionsBD.deleteEmploye(new Integer(request.getParameter("sel")));
+                        employeSB.deleteEmploye(new Integer(request.getParameter("sel")));
                         request.setAttribute("OkKey", MSG_SUPPRESSION_OK);
                     }
                     else
                         request.setAttribute("errKey", ERR_SELECTION_KO);
-                    request.setAttribute("listeEmplKey", actionsBD.getEmployes());
+                    request.setAttribute("listeEmplKey", employeSB.getEmployes());
                     request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);   
                     break;
                 case "details" :
                     if(request.getParameter("sel")!=null){                        
-                        request.setAttribute("listeEmplKey", actionsBD.getEmployes());
+                        request.setAttribute("listeEmplKey", employeSB.getEmployes());
                         session.setAttribute("selectionnedIdEmplForDetails",new Integer(request.getParameter("sel")));
-                        request.setAttribute("singleUser", actionsBD.getSingleEmploye(new Integer(request.getParameter("sel"))));
+                        request.setAttribute("singleUser", employeSB.getSingleEmploye(new Integer(request.getParameter("sel"))));
                         request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
                         break;
                     }
                     else{
                         request.setAttribute("errKey", ERR_SELECTION_KO);
-                        request.setAttribute("listeEmplKey", actionsBD.getEmployes());
+                        request.setAttribute("listeEmplKey", employeSB.getEmployes());
                         request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);
                     }                    
                     break;
@@ -94,13 +96,13 @@ public class Controleur extends HttpServlet {
                         request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
                         break;
                     }                        
-                    actionsBD.addEmploye(request.getParameter("nom"),request.getParameter("prenom"),
+                    employeSB.addEmploye(request.getParameter("nom"),request.getParameter("prenom"),
                               request.getParameter("tel_dom"),request.getParameter("tel_mob"),
                               request.getParameter("tel_pro"),request.getParameter("adresse") ,
-                              request.getParameter("codePostal") ,request.getParameter("ville") ,
+                              request.getParameter("cod$ePostal") ,request.getParameter("ville") ,
                               request.getParameter("email"));
                     request.removeAttribute("emptyErrKey");
-                    request.setAttribute("listeEmplKey", actionsBD.getEmployes());
+                    request.setAttribute("listeEmplKey", employeSB.getEmployes());
                     request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);
                     break;
                 case "modify" :                    
@@ -109,16 +111,16 @@ public class Controleur extends HttpServlet {
                         request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
                         break;
                     }    
-                    actionsBD.modifyEmploye((int) session.getAttribute("selectionnedIdEmplForDetails"),request.getParameter("nom"),request.getParameter("prenom"),
+                    employeSB.modifyEmploye((int) session.getAttribute("selectionnedIdEmplForDetails"),request.getParameter("nom"),request.getParameter("prenom"),
                               request.getParameter("tel_dom"),request.getParameter("tel_mob"),
                               request.getParameter("tel_pro"),request.getParameter("adresse") ,
                               request.getParameter("codePostal") ,request.getParameter("ville") ,
                               request.getParameter("email"));
-                    request.setAttribute("singleUser", actionsBD.getSingleEmploye((int) session.getAttribute("selectionnedIdEmplForDetails")));
+                    request.setAttribute("singleUser", employeSB.getSingleEmploye((int) session.getAttribute("selectionnedIdEmplForDetails")));
                     request.getRequestDispatcher(JSP_DETAILS_EMP).forward(request, response);
                     break;
                 case "seeList" :
-                    request.setAttribute("listeEmplKey", actionsBD.getEmployes());
+                    request.setAttribute("listeEmplKey", employeSB.getEmployes());
                     request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);
                     break;
             }
@@ -144,8 +146,8 @@ public class Controleur extends HttpServlet {
                    session.setAttribute("isAdmin", true);
                 session.setAttribute("isEmploye", true);
                 request.getSession().setAttribute("loggedInUser", userInput);
-                request.setAttribute("listeEmplKey", actionsBD.getEmployes());                
-                if (actionsBD.getEmployes().isEmpty())
+                request.setAttribute("listeEmplKey", employeSB.getEmployes());                
+                if (employeSB.getEmployes().isEmpty())
                     request.setAttribute("emptyErrKey", MSG_VIDE_EMPLOYE);
                 request.getRequestDispatcher(JSP_LISTE_EMP).forward(request, response);
             } else {

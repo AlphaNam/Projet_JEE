@@ -71,21 +71,21 @@
                                     <div class="form-group row">
                                         <label for="tel_dom" class="col-md-2 col-form-label text-md-right"><b>Tél dom</b></label>
                                         <div class="col-md-8">
-                                            <input type="text" id="tel_dom" class="form-control" name="tel_dom" value="${singleUser.telDom}">
+                                            <input type="text" id="tel_dom" class="form-control" name="tel_dom" value="${singleUser.teldom}">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label for="tel_mob" class="col-md-2 col-form-label text-md-right"><b>Tél mob</b></label>
                                         <div class="col-md-8">
-                                            <input type="text" id="tel_mob" class="form-control" name="tel_mob" value="${singleUser.telPort}">
+                                            <input type="text" id="tel_mob" class="form-control" name="tel_mob" value="${singleUser.telport}">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <label for="tel_pro" class="col-md-2 col-form-label text-md-right"><b>Tél pro</b></label>
                                         <div class="col-md-8">
-                                            <input type="text" id="tel_pro" class="form-control" name="tel_pro" value="${singleUser.telPro}">
+                                            <input type="text" id="tel_pro" class="form-control" name="tel_pro" value="${singleUser.telpro}">
                                         </div>
                                     </div>
 
@@ -96,7 +96,7 @@
                                         </div>
                                         <label for="codePostal" class="col-md-2 col-form-label text-md-right"><b>Code Postal</b></label>
                                         <div class="col-md-3">
-                                            <input type="text" id="codePostal" class="form-control" name="codePostal" value="${singleUser.codePostal}">
+                                            <input type="text" id="codePostal" class="form-control" name="codePostal" value="${singleUser.codepostal}">
                                         </div>
                                     </div>
 

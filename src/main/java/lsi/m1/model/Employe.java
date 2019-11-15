@@ -183,7 +183,7 @@ public class Employe implements Serializable {
 
     @Override
     public String toString() {
-        return "lsi.m1.model.Employes[ id=" + id + " ]";
+        return "lsi.m1.model.Employe[ id=" + id + " ]";
     }
     
 }

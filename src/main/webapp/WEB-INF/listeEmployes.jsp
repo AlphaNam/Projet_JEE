@@ -59,11 +59,11 @@
                         <td><input type="radio"  class="form-check-input" id="sel" name="sel" value="${employe.id}"></td>
                         <td>${employe.nom}</td>
                         <td>${employe.prenom}</td>
-                        <td>${employe.telDom}</td>
-                        <td>${employe.telPort}</td>
-                        <td>${employe.telPro}</td>
+                        <td>${employe.teldom}</td>
+                        <td>${employe.telport}</td>
+                        <td>${employe.telpro}</td>
                         <td>${employe.adresse}</td>
-                        <td>${employe.codePostal}</td>
+                        <td>${employe.codepostal}</td>
                         <td>${employe.ville}</td>
                         <td>${employe.email}</td>
                     </tr> 
