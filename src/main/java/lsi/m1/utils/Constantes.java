@@ -24,7 +24,8 @@ public class Constantes {
     public static final String REQ_MODIFY_EMPLOYE = "UPDATE EMPLOYES SET nom = ?,prenom = ?,teldom = ?,telport = ?," +
                                                  "telpro = ?,adresse = ?,codepostal = ?,ville = ?,email = ? WHERE id = ?";
     
-    public static final String ERR_SELECTION_KO = "Veuillez sélectionner l'employé(e) à supprimer";
+    public static final String ERR_SELECTION_DELETE_KO = "Veuillez sélectionner l'employé(e) à supprimer";
+    public static final String ERR_SELECTION_DETAILS_KO = "Veuillez sélectionner l'employé(e) à sélectionner";
     public static final String ERR_INCOMPLETE_KO = "Vous devez renseigner les deux champs";
     public static final String ERR_INCORRECT_KO = "Echec de la connexion! Verifiez votre login et/ou mot de passe et essayez à nouveau";
     public static final String ERR_ADD_KO = "Echec de l'ajout";

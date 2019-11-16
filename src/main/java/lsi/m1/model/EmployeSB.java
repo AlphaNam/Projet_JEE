@@ -5,7 +5,6 @@
  */
 package lsi.m1.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -29,8 +28,9 @@ public class EmployeSB {
     }
         
     public Employe getSingleEmploye(int id) {
+//        String myId = String.valueOf(id);
 //        Query q = em.createNativeQuery("SELECT * FROM Employes WHERE id = ?")
-//                    .setParameter(1, id);
+//                    .setParameter(1, myId);
 //        return (Employe) q.getResultList();
         return em.find(Employe.class, id);
     }
@@ -63,7 +63,9 @@ public class EmployeSB {
     
     public void modifyEmploye(int id, String nom,String prenom,String teldom,String telport,
             String telpro,String adresse,String codepostal,String ville,String email) {
-        Query q = em.createNativeQuery("UPDATE EMPLOYES SET nom = ?,prenom = ?,teldom = ?,telport = ?," +
+//        Query q = em.createNativeQuery("UPDATE EMPLOYES SET nom = ?,prenom = ?,teldom = ?,telport = ?," +
+//                                                 "telpro = ?,adresse = ?,codepostal = ?,ville = ?,email = ? WHERE id = ?")
+          Query q = em.createNativeQuery("UPDATE EMPLOYES SET nom = ?,prenom = ?,teldom = ?,telport = ?," +
                                                  "telpro = ?,adresse = ?,codepostal = ?,ville = ?,email = ? WHERE id = ?")
                     .setParameter(1, nom)
                     .setParameter(2,prenom)

@@ -4,7 +4,8 @@
     <jta-data-source>java:app/JEE_V2</jta-data-source>
     <class>lsi.m1.model.Employe</class>
     <class>lsi.m1.model.Utilisateur</class>
-    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+<!--    <exclude-unlisted-classes>false</exclude-unlisted-classes>-->
+    <shared-cache-mode>NONE</shared-cache-mode>
     <properties/>
   </persistence-unit>
 </persistence>
