@@ -5,14 +5,14 @@
             Controleur
         </welcome-file>
     </welcome-file-list>
-    <servlet>
+<!--    <servlet>
         <servlet-name>Controleur</servlet-name>
         <servlet-class>lsi.m1.ctrl.Controleur</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Controleur</servlet-name>
         <url-pattern>/Controleur</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
     <session-config>
         <session-timeout>
             30

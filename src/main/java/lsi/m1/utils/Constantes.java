@@ -11,7 +11,7 @@ package lsi.m1.utils;
  */
 public class Constantes {
 
-    public static final String URL = "jdbc:derby://localhost:1527/JEEPRJ";
+    public static final String URL = "jdbc:derby://localhost:1527/jee_v2";
     public static final String USER_BDD = "jee";
     public static final String MDP_BDD = "jee";
     

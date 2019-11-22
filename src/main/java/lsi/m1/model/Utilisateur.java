@@ -111,5 +111,5 @@ public class Utilisateur implements Serializable {
     public String toString() {
         return "lsi.m1.model.Utilisateur[ id=" + id + " ]";
     }
-    
+
 }

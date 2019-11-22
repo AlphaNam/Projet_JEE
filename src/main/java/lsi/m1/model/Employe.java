@@ -185,5 +185,5 @@ public class Employe implements Serializable {
     public String toString() {
         return "lsi.m1.model.Employe[ id=" + id + " ]";
     }
-    
+
 }
